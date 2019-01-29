@@ -1,0 +1,13 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "7]p*X,A3",
+  "database": "PokerData",
+  "entities": [
+    "src/**/**.entity{.ts,.js}"
+  ],
+  "synchronize": false,
+  "logging": false
+}
