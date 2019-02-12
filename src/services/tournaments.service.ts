@@ -22,6 +22,16 @@ export class TournamentsService {
         return await this.tournamentRepository.findOne(id);
     }
 
+    async findOneByUserId(id: number) {
+        return await this.tournamentRepository.find({
+            where: {
+                user: {
+                    id
+                }
+            }
+        })
+    }
+
     async update(id: number, data: object) {
         return await this.tournamentRepository.update(id, data);
     }

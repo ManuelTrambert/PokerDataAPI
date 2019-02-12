@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne} from 'typeorm';
 import {Users} from './users.entity';
 
 @Entity()
@@ -21,7 +21,7 @@ export class Tournaments {
     @Column()
     nbPlayers: number;
 
-    @OneToOne(type => Users)
+    @ManyToOne(type => Users)
     @JoinColumn()
     user: Users;
 }

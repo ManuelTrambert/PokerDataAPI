@@ -42,14 +42,14 @@ export class UserService {
         if (user) {
             const compare = await bcrypt.compare(body.password, user.password)
             if (compare) {
-                const hash = await bcrypt.hash('Le token de PD', 10);
+                const hash = await bcrypt.hash('Le token de', 10);
                 await this.userRepository.update(user.id, {token: hash});
-                return hash;
+                return {id: user.id, hash};
             } else {
-                return '';
+                return null;
             }
         } else {
-            return '';
+            return null;
         }
     }
 

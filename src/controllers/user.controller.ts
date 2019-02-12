@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Param, Put, Delete, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Post, Param, Put, Delete, UseGuards, HttpStatus, Res} from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
 import {UserService} from '../services/user.service';
 import {Users} from '../entities/users.entity';
@@ -22,8 +22,15 @@ export class UserController {
     }
 
     @Post('/login')
-    async login(@Body() loginUserDto: LoginUserDto) {
-        return this.userService.login(loginUserDto);
+    async login(@Res() res, @Body() loginUserDto: LoginUserDto) {
+        const token = await this.userService.login(loginUserDto);
+        console.log(token);
+        if (token) {
+            res.status(HttpStatus.OK).send(token);
+        } else {
+            res.status(HttpStatus.UNAUTHORIZED).send();
+        }
+
     }
 
     @Get(':id')

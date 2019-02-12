@@ -8,6 +8,6 @@
   "entities": [
     "src/**/**.entity{.ts,.js}"
   ],
-  "synchronize": false,
-  "logging": true
+  "synchronize": true,
+  "logging": false
 }

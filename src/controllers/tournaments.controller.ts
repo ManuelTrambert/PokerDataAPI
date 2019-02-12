@@ -27,6 +27,12 @@ export class TournamentsController {
         return this.tournamentService.findOne(id);
     }
 
+    @Get(':id/user')
+    @UseGuards(AuthGuard('bearer'))
+    findOneByUserId(@Param('id') id) {
+        return this.tournamentService.findOneByUserId(id);
+    }
+
     @Put(':id')
     @UseGuards(AuthGuard('bearer'))
     update(@Param('id') id, @Body() updateUserDto) {
