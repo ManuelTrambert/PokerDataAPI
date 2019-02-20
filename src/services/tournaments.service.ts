@@ -53,8 +53,30 @@ export class TournamentsService {
                 resTour.push({gain: resTour.slice(-1)[0].gain + tournament.difference, date: tournament.createdAt});
             }
         });
-        console.log(resTour);
-        return tournamentList;
+        return resTour;
+    }
+
+    async getStatsForUserPercent(id: number) {
+        let resUser = [];
+
+        let tournamentList = await this.tournamentRepository.find(
+            {
+                where: {
+                    user: {
+                        id
+                    }
+                }
+            }
+        );
+
+        tournamentList.sort((tournament, tournamentBis) => {
+            return new Date(tournament.createdAt).getTime() - new Date(tournamentBis.createdAt).getTime();
+        });
+        tournamentList.forEach(tournament => {
+            tournament.pos = Math.round(tournament.pos / tournament.nbPlayers * 100);
+        });
+
+        return(tournamentList);
     }
 
     async update(id: number, data: object) {

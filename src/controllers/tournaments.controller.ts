@@ -50,4 +50,10 @@ export class TournamentsController {
     getStatsForUser(@Param('id') id) {
         return this.tournamentService.getStatsForUser(id);
     }
+
+    @Get(':id/statspercent')
+    @UseGuards(AuthGuard('bearer'))
+    getStatsForUserPercent(@Param('id') id) {
+        return this.tournamentService.getStatsForUserPercent(id);
+    }
 }
