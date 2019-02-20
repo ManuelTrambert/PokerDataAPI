@@ -21,6 +21,9 @@ export class Tournaments {
     @Column()
     nbPlayers: number;
 
+    @Column({type: 'timestamp'})
+    createdAt: Date;
+
     @ManyToOne(type => Users)
     @JoinColumn()
     user: Users;

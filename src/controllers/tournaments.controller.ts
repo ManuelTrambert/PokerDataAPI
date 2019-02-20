@@ -44,4 +44,10 @@ export class TournamentsController {
     remove(@Param('id') id) {
         return this.tournamentService.delete;
     }
+
+    @Get(':id/stats')
+    @UseGuards(AuthGuard('bearer'))
+    getStatsForUser(@Param('id') id) {
+        return this.tournamentService.getStatsForUser(id);
+    }
 }
