@@ -33,6 +33,12 @@ export class UserController {
 
     }
 
+    @Get(':username/users')
+    @UseGuards(AuthGuard('bearer'))
+    findByPseudo(@Param('username') username) {
+        return this.userService.findUserByPseudo(username);
+    }
+
     @Get(':id')
     @UseGuards(AuthGuard('bearer'))
     findOne(@Param('id') id) {

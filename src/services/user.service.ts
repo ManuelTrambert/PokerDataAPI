@@ -1,5 +1,6 @@
 import {Injectable, Inject} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
+import {Like} from 'typeorm';
 import {Repository} from 'typeorm';
 import {Users} from '../entities/users.entity';
 import {CreateUserDto} from '../payload/create-userDTO';
@@ -35,6 +36,14 @@ export class UserService {
         } else {
             return null;
         }
+    }
+
+    async findUserByPseudo(username: string) {
+        return await this.userRepository.find({
+            where: {
+                username: Like(`%${username}%`)
+            }
+        })
     }
 
     async login(body: LoginUserDto) {
