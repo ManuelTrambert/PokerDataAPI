@@ -8,6 +8,7 @@ import {Users} from './entities/users.entity';
 import {Tournaments} from './entities/tournaments.entity';
 import {PassportModule} from '@nestjs/passport';
 import {UserService} from './services/user.service';
+import {PokerCalculatorModule} from './modules/poker_calculator.module';
 
 @Module({
     imports: [
@@ -16,7 +17,8 @@ import {UserService} from './services/user.service';
         UserModule,
         TournamentsModule,
         AuthModule,
-        PassportModule
+        PassportModule,
+        PokerCalculatorModule
     ],
     controllers: [],
     providers: [UserService],
