@@ -67,7 +67,7 @@ const listCards = [
     {name: THREE, id: 46, type: CLUB, letterName: '3', letterType: 'c'},
     {name: THREE, id: 47, type: DIAMOND, letterName: '3', letterType: 'd'},
     {name: TWO, id: 48, type: HEART, letterName: '2', letterType: 'h'},
-    {name: TWO, id: 49, type: SPADE, letterName: '2', letterType: 'S'},
+    {name: TWO, id: 49, type: SPADE, letterName: '2', letterType: 's'},
     {name: TWO, id: 50, type: CLUB, letterName: '2', letterType: 'c'},
     {name: TWO, id: 51, type: DIAMOND, letterName: '2', letterType: 'd'},
 ];

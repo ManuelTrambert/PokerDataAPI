@@ -1,6 +1,5 @@
 import {Injectable} from '@nestjs/common';
 import {listCards} from '../config/cards';
-import {listHands} from '../config/hands';
 import {calculateEquity} from 'poker-odds'
 
 @Injectable()
@@ -30,10 +29,24 @@ export class PokerCalculatorService {
             return card.id === cardSecond;
         });
 
-        const result = await calculateEquity([[resCardOne.letterName + resCardOne.letterType, resCardSecond.letterName + resCardSecond.letterType]], boardCalculator);
-        result[0].handChances.forEach((hands) => {
-            console.log('Hand : ',hands);
-        });
-        return result[0].handChances;
+        let adverse = [];
+        if (resCardOne.id !== 8  && resCardSecond.id !== 8) {
+            adverse[0] = 'Qh';
+        } else if (resCardOne.id !== 9 && resCardSecond.id !== 9) {
+            adverse[0] = 'Qs'
+        } else {
+            adverse[0] = 'Qc'
+        }
+
+        if (resCardOne.id !== 26  && resCardSecond.id !== 26) {
+            adverse[1] = '8c';
+        } else if (resCardOne.id !== 27 && resCardSecond.id !== 27) {
+            adverse[1] = '8d'
+        } else {
+            adverse[1] = '8h'
+        }
+
+        const result = await calculateEquity([[resCardOne.letterName + resCardOne.letterType, resCardSecond.letterName + resCardSecond.letterType], adverse], boardCalculator);
+        return result;
     }
 }
