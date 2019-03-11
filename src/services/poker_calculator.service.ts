@@ -1,9 +1,51 @@
 import {Injectable} from '@nestjs/common';
 import {listCards} from '../config/cards';
 import {calculateEquity} from 'poker-odds'
+import { type } from 'os';
 
 @Injectable()
 export class PokerCalculatorService {
+
+    async percentageVs(cards, boardL) {
+        let board = [];
+        let hands = [];
+
+        cards = cards.split(',');
+        for (let i = 0; i < cards.length; i += 1) {
+            cards[i] = Number(cards[i]);
+        }
+
+        if (boardL && boardL.length > 0) {
+            board = boardL.split(',');
+        }
+        const boardCalculator = [];
+
+        for (let i = 0; i < board.length; i += 1) {
+            if (typeof board[i] === 'string') {
+                board[i] = Number(board[i]);
+            }
+            board[i] = listCards.find((card) => {
+                return card.id === board[i];
+            });
+            boardCalculator.push(board[i].letterName + board[i].letterType);
+        }
+
+        for (let i = 0; i < cards.length; i += 1) {
+            if (i % 2 === 0) {
+                const resCardOne = listCards.find((card) => {
+                    return card.id === cards[i];
+                });
+        
+                const resCardSecond = listCards.find((card) => {
+                    return card.id === cards[i + 1];
+                });
+
+                hands.push([resCardOne.letterName + resCardOne.letterType, resCardSecond.letterName + resCardSecond.letterType]);
+            }
+        }
+    
+        return await calculateEquity(hands, boardCalculator);
+    }
 
     async percentageForOneHand(cardOne, cardSecond, boardL) {
 
@@ -48,32 +90,5 @@ export class PokerCalculatorService {
 
         const result = await calculateEquity([[resCardOne.letterName + resCardOne.letterType, resCardSecond.letterName + resCardSecond.letterType], adverse], boardCalculator);
         return result;
-    }
-
-    async percentageVs(cards, boardL) {
-
-        if (boardL.length > 0) {
-            board = boardL.split(',');
-        }
-        const boardCalculator = [];
-
-        for (let i = 0; i < board.length; i += 1) {
-            if (typeof board[i] === 'string') {
-                board[i] = Number(board[i]);
-            }
-            board[i] = listCards.find((card) => {
-                return card.id === board[i];
-            });
-            boardCalculator.push(board[i].letterName + board[i].letterType);
-        }
-        /*const resCardOne = listCards.find((card) => {
-            return card.id === cardOne;
-        });
-        const resCardSecond = listCards.find((card) => {
-            return card.id === cardSecond;
-        });
-
-        const result = await calculateEquity([[resCardOne.letterName + resCardOne.letterType, resCardSecond.letterName + resCardSecond.letterType], adverse], boardCalculator);*/
-        return {};
     }
 }
